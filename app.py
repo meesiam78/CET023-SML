@@ -16,12 +16,21 @@ def index():
 def prediction_DBS():
     return(render_template("prediction_DBS.html"))
 
-
 @app.route("/prediction_result_DBS",methods=["GET","POST"])
 def prediction_result_DBS():
     q = float(request.form.get("q"))
     r = (-50.6 * q ) + 90.2
     return(render_template("prediction_result_DBS.html",r=r))
+
+@app.route("/predict_credibility",methods=["GET","POST"])
+def predict_credibility():
+    return(render_template("predict_credibility.html"))
+
+@app.route("/predict_credibility_result",methods=["GET","POST"])
+def predict_credibility_result():
+    q = float(request.form.get("q"))
+    r = (-0.0001269 * q ) + 1.29761929
+    return(render_template("predict_credibility_result.html",r=r))
 
 @app.route("/faq",methods=["GET","POST"])
 def faq():
@@ -38,9 +47,7 @@ def q2():
     r = model.generate_content(q)
     return(render_template("q2_reply.html",r=r))
 
-@app.route("/predict_credibility",methods=["GET","POST"])
-def predict_credibility():
-    return(render_template("predict_credibility.html"))
+
 
 
 if __name__ == "__main__":
