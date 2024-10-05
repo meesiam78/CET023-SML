@@ -1,6 +1,7 @@
 from flask import Flask,render_template,request
 import google.generativeai as genai
 import os
+import numpy as np
 
 model = genai.GenerativeModel("gemini-1.5-flash")
 api = os.getenv("makersuite")
@@ -30,6 +31,7 @@ def predict_credibility():
 def predict_credibility_result():
     q = float(request.form.get("q"))
     r = (-0.0001269 * q ) + 1.29761929
+    r = np.where(r>=0.5,"Creditable","Not Creditable")
     return(render_template("predict_credibility_result.html",r=r))
 
 @app.route("/faq",methods=["GET","POST"])
