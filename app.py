@@ -38,5 +38,10 @@ def q2():
     r = model.generate_content(q)
     return(render_template("q2_reply.html",r=r))
 
+@app.route("/predict_credibility",methods=["GET","POST"])
+def predict_credibility():
+    return(render_template("predict_credibility.html"))
+
+
 if __name__ == "__main__":
     app.run()
