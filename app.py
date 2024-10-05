@@ -2,6 +2,7 @@ from flask import Flask,render_template,request
 import google.generativeai as genai
 import os
 import numpy as np
+import textblob
 
 model = genai.GenerativeModel("gemini-1.5-flash")
 api = os.getenv("makersuite")
@@ -34,6 +35,16 @@ def predict_credibility_result():
     r = np.where(r>=0.5,"Creditable","Not Creditable")
     return(render_template("predict_credibility_result.html",r=r))
 
+@app.route("/sentimentanalysis",methods=["GET","POST"])
+def sentimentanalysis():
+    return(render_template("sentimentanalysis.html"))
+
+@app.route("/sentimentanalysisresult",methods=["GET","POST"])
+def sentimentanalysisresult():
+    q = request.form.get("q")
+    r = textblob.TextBlob(q).sentiment
+    return(render_template("sentimentanalysisresult.html",r=r))
+
 @app.route("/faq",methods=["GET","POST"])
 def faq():
     return(render_template("faq.html"))
@@ -48,7 +59,6 @@ def q2():
     q = request.form.get("q")
     r = model.generate_content(q)
     return(render_template("q2_reply.html",r=r))
-
 
 
 
